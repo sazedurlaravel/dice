@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<head>
+    <title></title>
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+    <img src="img/logo.png">
+    <section class="container">
+        <div id="cube">
+            <div class="front">
+                <span class="dot dot1"></span>
+            </div>
+            <div class="back">
+                <span class="dot dot1"></span>
+                <span class="dot dot2"></span>
+            </div>
+            <div class="right">
+                <span class="dot dot1"></span>
+                <span class="dot dot2"></span>
+                <span class="dot dot3"></span>
+            </div>
+            <div class="left">
+                <span class="dot dot1"></span>
+                <span class="dot dot2"></span>
+                <span class="dot dot3"></span>
+                <span class="dot dot4"></span>
+            </div>
+            <div class="top">
+                <span class="dot dot1"></span>
+                <span class="dot dot2"></span>
+                <span class="dot dot3"></span>
+                <span class="dot dot4"></span>
+                <span class="dot dot5"></span>
+            </div>
+            <div class="bottom">
+                <span class="dot dot1"></span>
+                <span class="dot dot2"></span>
+                <span class="dot dot3"></span>
+                <span class="dot dot4"></span>
+                <span class="dot dot5"></span>
+                <span class="dot dot6"></span>
+            </div>
+        </div>
+    </section>
+
+    <button>Roll Dice</button>
+</body>
+<script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
+<script>
+
+
+    const cube = document.getElementById('cube');
+
+    const min = 1;
+    const max = 24;
+    const loadHandler = () => {
+        console.log('loaded');
+    }
+
+    createjs.Sound.alternateExtensions = ['mp3'];
+    createjs.Sound.on('fileload', loadHandler, this);
+    createjs.Sound.registerSound('/sounds/dice_fall.mp3', 'dice_fall');
+
+
+    cube.addEventListener('animationend webkitAnimationEnd', () => {
+
+        console.log('animation finished');
+    }, false);
+
+    document.querySelector('button').addEventListener('click', () => {
+        var xRand = getRandom(max, min);
+        var yRand = getRandom(max, min);
+
+        cube.style.webkitTransform = 'rotateX(' + xRand + 'deg) rotateY(' + yRand + 'deg)';
+        cube.style.transform = 'rotateX(' + xRand + 'deg) rotateY(' + yRand + 'deg)';
+        let timeout = setTimeout(() => {
+            createjs.Sound.play('dice_fall');
+        }, 2300);
+    });
+
+    const getRandom = (max, min) => {
+        return (Math.floor(Math.random() * (max - min)) + min) * 90;
+    }
+
+
+</script>
+
+</html>
